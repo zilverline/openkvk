@@ -1,0 +1,12 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+.DS_Store
+._*
+coverage/*
+doc/*
+test.rb
+.yardoc
+.AppleDouble
+

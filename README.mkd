@@ -1,0 +1,24 @@
+OpenKVK: Ruby wrapper for the [OpenKVK api](http://api.openkvk.nl/)
+====================
+
+Installation
+------------
+	gem install openkvk
+
+Usage Examples
+--------------
+General:
+
+	require "openkvk"
+
+
+Testing
+-------
+Run all tests:
+
+	rake
+
+Copyright
+---------
+Copyright (c) 2011 Zilverline / Daniël van Hoesel.
+See LICENSE for details.
