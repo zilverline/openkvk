@@ -14,9 +14,9 @@ General:
 
 	require "openkvk"
 
-  company = OpenKVK.find("Zilverline B.V.", :first)
-  puts company.bedrijfsnaam 
-   #=> "Zilverline B.V."
+	company = OpenKVK.find("Zilverline B.V.", :first)
+	puts company.bedrijfsnaam 
+	 #=> "Zilverline B.V."
 
 Testing
 -------
