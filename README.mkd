@@ -1,5 +1,8 @@
 OpenKVK: Ruby wrapper for the [OpenKVK api](http://api.openkvk.nl/)
 ====================
+Work In Progress
+----------------
+Not ready for public yet.
 
 Installation
 ------------
@@ -11,6 +14,9 @@ General:
 
 	require "openkvk"
 
+  company = OpenKVK.find("Zilverline B.V.", :first)
+  puts company.bedrijfsnaam 
+   #=> "Zilverline B.V."
 
 Testing
 -------
@@ -21,4 +27,4 @@ Run all tests:
 Copyright
 ---------
 Copyright (c) 2011 Zilverline / Daniël van Hoesel.
-See LICENSE for details.
+See [LICENSE](https://github.com/zilverline/openkvk/blob/master/LICENSE.mkd) for details.
