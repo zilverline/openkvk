@@ -9,10 +9,10 @@ module OpenKVK
       if options.is_a?(String)
         options = {:conditions => ["bedrijfsnaam LIKE '%#{options}%'"]}
       end
-      options = {:limit => 1000, :select => ["*"], :count => :all, :match => :all}.merge(options)
+      options = {:limit => 1000, :select => ["*"], :count => :all, :match_condition => :all}.merge(options)
       
       options[:limit] = 1 if options[:count] == :first
-      result = API.query("SELECT #{options[:select].join(", ")} FROM kvk WHERE #{options[:conditions].join(options[:match] == :any ? " OR " : " AND ")} LIMIT #{options[:limit]}")
+      result = API.query("SELECT #{options[:select].join(", ")} FROM kvk WHERE #{options[:conditions].join(options[:match_condition] == :any ? " OR " : " AND ")} LIMIT #{options[:limit]}")
       return result.first if options[:count] == :first
       result
     end

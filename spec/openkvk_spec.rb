@@ -54,7 +54,7 @@ describe OpenKVK do
     it "should find a company with multiple conditions" do
       expect_query("SELECT * FROM kvk WHERE bedrijfsnaam LIKE '%FooBar%' OR kvk = '343774520000' LIMIT 1", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","website"],"ROWS":[["343774520000","Zilverline B.V.","34377452","0","Molukkenstraat 200 E4","1098TW","Amsterdam","Hoofdvestiging",null]]}}]')
 
-      company = OpenKVK.find(:conditions => ["bedrijfsnaam LIKE '%FooBar%'", "kvk = '343774520000'"], :match => :any, :count => :first)
+      company = OpenKVK.find(:conditions => ["bedrijfsnaam LIKE '%FooBar%'", "kvk = '343774520000'"], :match_condition => :any, :count => :first)
       company.bedrijfsnaam.should == "Zilverline B.V."
       company.kvk.should == "343774520000"
     end
