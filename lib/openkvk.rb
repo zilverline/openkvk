@@ -7,7 +7,7 @@ module OpenKVK
   class << self
     def find(options={})
       if options.is_a?(String)
-        options = {:conditions => ["bedrijfsnaam LIKE '%#{options}%'"]}
+        options = {:conditions => ["bedrijfsnaam ILIKE '%#{options}%'"]}
       end
       options = {:limit => 1000, :select => ["*"], :count => :all, :match_condition => :all}.merge(options)
       
@@ -19,7 +19,7 @@ module OpenKVK
     
     %w{kvk bedrijfsnaam kvks adres postcode plaats type website}.each do |field|      
       define_method("find_by_#{field}") do |value, options={}|
-        options = {:conditions => ["#{field} LIKE '%#{value}%'"]}.merge(options)
+        options = {:conditions => ["#{field} ILIKE '%#{value}%'"]}.merge(options)
         find(options)
       end
     end
