@@ -3,15 +3,29 @@ require File.expand_path('../openkvk/api', __FILE__)
 
 module OpenKVK
   extend Configuration
-  
+    
   class << self
-    def find(name, count=:all, options={})
-      options = {:limit => 1000}.merge(options)
-      options[:limit] = 1 if count == :first
-      result = API.query("SELECT * FROM kvk WHERE bedrijfsnaam LIKE '%#{name}%' LIMIT #{options[:limit]}")
-      return result.first if count == :first
+    def find(options={})
+      if options.is_a?(String)
+        options = {:conditions => ["bedrijfsnaam LIKE '%#{options}%'"]}
+      end
+      options = {:limit => 1000, :select => ["*"], :count => :all, :match => :all}.merge(options)
+      
+      options[:limit] = 1 if options[:count] == :first
+      result = API.query("SELECT #{options[:select].join(", ")} FROM kvk WHERE #{options[:conditions].join(options[:match] == :any ? " OR " : " AND ")} LIMIT #{options[:limit]}")
+      return result.first if options[:count] == :first
       result
     end
+    
+    %w{kvk bedrijfsnaam kvks adres postcode plaats type website}.each do |field|      
+      define_method("find_by_#{field}") do |value, options={}|
+        options = {:conditions => ["#{field} LIKE '%#{value}%'"]}.merge(options)
+        find(options)
+      end
+    end
+    
   end
+  
+
   
 end

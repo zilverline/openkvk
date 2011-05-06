@@ -9,6 +9,7 @@ module OpenKVK
   class API
     class << self
       def query(query)
+        #puts query
         result = JSON.parse(get(query)).first["RESULT"]
 
         records = []
@@ -27,7 +28,7 @@ module OpenKVK
             response = Net::HTTP.get_response(URI.parse("#{OpenKVK.host}#{URI.escape(response["Location"])}"))
           end
           response.body
-        rescue
+        rescue Exception => e
           raise InvalidResponseException.new("Couldn't get the response: #{$!}")
         end
       end

@@ -10,9 +10,8 @@ RSpec.configure do |config|
   config.mock_with :mocha
 end
 
-def response(data)
-  response = Hashie::Mash.new(:body => data)
-  Net::HTTP.stubs(:get_response).returns(response)
+def expect_query(sql, response)
+  OpenKVK::API.expects(:get).with(sql).returns(response)
 end
 
 load File.expand_path('../../lib/openkvk.rb', __FILE__)
