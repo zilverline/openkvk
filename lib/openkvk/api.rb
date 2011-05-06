@@ -9,14 +9,8 @@ module OpenKVK
   class API
     class << self
       def query(query)
-        #puts query
         result = JSON.parse(get(query)).first["RESULT"]
-
-        records = []
-        result["ROWS"].each do |row|
-          records << Hashie::Mash.new(Hash[*result["HEADER"].zip(row).flatten])
-        end
-        records
+        result["ROWS"].map { |row| Hashie::Mash.new(Hash[*result["HEADER"].zip(row).flatten]) }
       end
       
       private
