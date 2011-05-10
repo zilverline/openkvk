@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('simplecov', '~> 0.3')
   s.add_development_dependency('maruku', '~> 0.6')
   s.add_development_dependency('yard', '~> 0.6')
-  s.add_development_dependency('hashie', '~> 1.0.0')
-  s.add_development_dependency('json', '~> 1.5.1')
+  s.add_dependency('hashie', '~> 1.0.0')
+  s.add_dependency('json', '~> 1.5.1')
   
   s.name        = "openkvk"
   s.version     = OpenKVK::VERSION
