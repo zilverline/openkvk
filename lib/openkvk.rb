@@ -7,7 +7,7 @@ module OpenKVK
   class << self
     def find(options={})
       if options.is_a?(String)
-        options = {:conditions => ["bedrijfsnaam ILIKE '%#{options}%'"]}
+        options = {:conditions => ["bedrijfsnaam LIKE '%#{options}%'", "bedrijfsnaam LIKE '%#{options.to_s.upcase}%'", "bedrijfsnaam LIKE '%#{capitalize_and_format_each_word(options)}%'"], :match_condition => :any}
       end
       options = {:limit => 1000, :select => ["*"], :count => :all, :match_condition => :all}.merge(options)
       
@@ -17,15 +17,33 @@ module OpenKVK
       result
     end
     
-    %w{kvk bedrijfsnaam kvks adres postcode plaats type website}.each do |field|      
+    def find_by_bedrijfsnaam(name, options={})
+      # bedrijfsnaam is always a string, so we want to search for different formats of the string
+      options = {:conditions => ["bedrijfsnaam LIKE '%#{name}%'", "bedrijfsnaam LIKE '%#{name.to_s.upcase}%'", "bedrijfsnaam LIKE '%#{capitalize_and_format_each_word(name)}%'"], :match_condition => :any}.merge(options)
+      find(options)
+    end
+    
+    %w{kvk kvks adres postcode plaats type website}.each do |field|      
       define_method("find_by_#{field}") do |value, options={}|
         options = {:conditions => ["#{field} ILIKE '%#{value}%'"]}.merge(options)
         find(options)
       end
     end
+
+    private
+    
+    def capitalize_and_format_each_word(name)
+      # capitalize each word
+      name.gsub!(/\b('?[a-z])/) do |word| 
+        $1.capitalize
+      end
+
+      # format B.V. and N.V.
+      name.gsub!(/([b|n]\.?v\.?)$/i) do |match|
+        "#{match.to_s[0].upcase}.V."
+      end
+    end
     
   end
-  
-
   
 end

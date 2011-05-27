@@ -17,7 +17,7 @@ describe OpenKVK do
     end
     
     it "should find multiple companies" do
-      expect_query("SELECT * FROM kvk WHERE bedrijfsnaam ILIKE '%Zilverline%' LIMIT 1000", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","website"],"ROWS":[["342838240000","Zilverline Beheer B.V.","34283824","0","Finsenstraat 56","1098RJ","Amsterdam","Hoofdvestiging",null],["343774520000","Zilverline B.V.","34377452","0","Molukkenstraat 200 E4","1098TW","Amsterdam","Hoofdvestiging",null]]}}]')
+      expect_query("SELECT * FROM kvk WHERE bedrijfsnaam LIKE '%Zilverline%' OR bedrijfsnaam LIKE '%ZILVERLINE%' OR bedrijfsnaam LIKE '%%' LIMIT 1000", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","website"],"ROWS":[["342838240000","Zilverline Beheer B.V.","34283824","0","Finsenstraat 56","1098RJ","Amsterdam","Hoofdvestiging",null],["343774520000","Zilverline B.V.","34377452","0","Molukkenstraat 200 E4","1098TW","Amsterdam","Hoofdvestiging",null]]}}]')
       
       companies = OpenKVK.find("Zilverline")
       companies.size.should == 2
@@ -63,7 +63,7 @@ describe OpenKVK do
 
   describe ".find_by_bedrijfsnaam" do
     it "should find a company" do
-      expect_query("SELECT * FROM kvk WHERE bedrijfsnaam ILIKE '%Zilverline B.V.%' LIMIT 1", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","website"],"ROWS":[["343774520000","Zilverline B.V.","34377452","0","Molukkenstraat 200 E4","1098TW","Amsterdam","Hoofdvestiging",null]]}}]')
+      expect_query("SELECT * FROM kvk WHERE bedrijfsnaam LIKE '%Zilverline B.V.%' OR bedrijfsnaam LIKE '%ZILVERLINE B.V.%' OR bedrijfsnaam LIKE '%Zilverline B.V.%' LIMIT 1", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","website"],"ROWS":[["343774520000","Zilverline B.V.","34377452","0","Molukkenstraat 200 E4","1098TW","Amsterdam","Hoofdvestiging",null]]}}]')
     
       OpenKVK.find_by_bedrijfsnaam("Zilverline B.V.", :count => :first).bedrijfsnaam.should == "Zilverline B.V."
     end
