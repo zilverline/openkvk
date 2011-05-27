@@ -42,6 +42,7 @@ module OpenKVK
       name.gsub!(/([b|n]\.?v\.?)$/i) do |match|
         "#{match.to_s[0].upcase}.V."
       end
+      name
     end
     
   end
