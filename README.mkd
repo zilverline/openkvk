@@ -10,13 +10,17 @@ Usage Examples
 General:
 
 	require "openkvk"
-
+	
+	# default api finders
 	company = OpenKVK.find("Zilverline B.V.", :count => :first)
 	company = OpenKVK.find("Zilverline").first
 	company = OpenKVK.find_by_bedrijfsnaam("Zilverline B.V.", :count => :first)
 	company = OpenKVK.find_by_kvk("343774520000", :count => :first)
 	company = OpenKVK.find(:conditions => ["bedrijfsnaam = 'Zilverline B.V.'", "kvk = '343774520000'"], :count => :first)
 	company = OpenKVK.find(:conditions => ["bedrijfsnaam = 'FooBar'", "kvk = '343774520000'"], :match => :any, :count => :first)
+	
+	# full text search api
+	company = OpenKVK.search("zIlVeRlInE").first
 	
 	puts company.bedrijfsnaam 
 	 #=> "Zilverline B.V."
