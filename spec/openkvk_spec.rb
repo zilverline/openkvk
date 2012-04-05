@@ -59,7 +59,24 @@ describe OpenKVK do
       company.kvk.should == "343774520000"
     end
   end
-  
+
+  describe ".search" do
+    it "should search for a company with full text search" do
+      expect_search("ZiLvErLiNe", '[{"RESULT":[342838240000,343774520000]}]')
+      expect_query("SELECT * FROM kvk WHERE kvk IN (342838240000, 343774520000)", '[{"RESULT":{"TYPES":["bigint","varchar","int","int","varchar","varchar","varchar","varchar","varchar","varchar","bigint","varchar","decimal","decimal","date"],"HEADER":["kvk","bedrijfsnaam","kvks","sub","adres","postcode","plaats","type","status","website","vestiging","rechtsvorm","lat_rad","lon_rad","anbi"],"ROWS":[["343774520000","Zilverline B.V.","34377452",null,"Science Park 400","1098XH","Amsterdam","Hoofdvestiging",null,null,"19993846",null,"0.913791014","0.086494384",null],["342838240000","Zilverline Beheer B.V.","34283824",null,"Prins Hendriklaan 9","1404AR","Bussum","Hoofdvestiging",null,null,"5062055",null,"0.912472656","0.090085531",null]]}}]')
+
+      companies = OpenKVK.search("ZiLvErLiNe")
+      companies.size.should == 2
+      company = companies.first
+      company.bedrijfsnaam.should == "Zilverline B.V."
+      company.kvk.should == "343774520000"
+      company.adres.should == "Science Park 400"
+      company.postcode.should == "1098XH"
+      company.plaats.should == "Amsterdam"
+      company.type.should == "Hoofdvestiging"
+      company.website.should be nil
+    end
+  end
 
   describe ".find_by_bedrijfsnaam" do
     it "should find a company" do

@@ -4,8 +4,8 @@ module OpenKVK
     # An array of valid keys in the options hash when configuring an {OpenKVK::API}
     VALID_OPTIONS_KEYS = [:host].freeze
 
-    # By default, set http://api.openkvk.nl/ as the server
-    DEFAULT_HOST = "http://api.openkvk.nl/".freeze
+    # By default, set openkvk.nl as the server
+    DEFAULT_HOST = "openkvk.nl".freeze
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS

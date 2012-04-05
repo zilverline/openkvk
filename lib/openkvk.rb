@@ -5,6 +5,12 @@ module OpenKVK
   extend Configuration
     
   class << self
+    
+    def search(keywords)
+      numbers = API.search(keywords)
+      numbers.size > 0 ? API.query("SELECT * FROM kvk WHERE kvk IN (#{numbers.join(", ")})") : []
+    end
+    
     def find(options={})
       if options.is_a?(String)
         options = {:conditions => ["bedrijfsnaam LIKE '%#{options}%'", "bedrijfsnaam LIKE '%#{options.to_s.upcase}%'", "bedrijfsnaam LIKE '%#{capitalize_and_format_each_word(options)}%'"], :match_condition => :any}
