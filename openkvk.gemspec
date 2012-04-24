@@ -3,15 +3,15 @@ $:.push File.expand_path("../lib", __FILE__)
 require "openkvk/version"
 
 Gem::Specification.new do |s|
-  s.add_development_dependency('bundler', '~> 1.0')
-  s.add_development_dependency('rake', '~> 0.8')
-  s.add_development_dependency('rspec', '~> 2.3')
-  s.add_development_dependency('mocha', '~> 0.9.10')
-  s.add_development_dependency('simplecov', '~> 0.3')
-  s.add_development_dependency('maruku', '~> 0.6')
-  s.add_development_dependency('yard', '~> 0.6')
-  s.add_dependency('hashie', '~> 1.0.0')
-  s.add_dependency('json', '~> 1.5.1')
+  s.add_development_dependency('bundler')
+  s.add_development_dependency('rake')
+  s.add_development_dependency('rspec')
+  s.add_development_dependency('mocha')
+  s.add_development_dependency('simplecov')
+  s.add_development_dependency('maruku')
+  s.add_development_dependency('yard')
+  s.add_dependency('hashie')
+  s.add_dependency('json')
   
   s.name        = "openkvk"
   s.version     = OpenKVK::VERSION
