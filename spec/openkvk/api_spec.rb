@@ -28,6 +28,16 @@ describe OpenKVK do
       }.should raise_error OpenKVK::InvalidResponseException
     end
     
+    it "should raise an exception when an blank result is returned by the host" do
+      response = stub(:body => "")
+      response.stubs(:kind_of?).returns(false)
+      Net::HTTP.stubs(:get_response).returns(response)
+      
+      lambda {
+        OpenKVK::API.search("zilverline")
+      }.should raise_error OpenKVK::InvalidResponseException
+    end
+    
   end
   
 end
