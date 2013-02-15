@@ -30,8 +30,8 @@ module OpenKVK
     end
     
     %w{kvk kvks adres postcode plaats type website}.each do |field|      
-      define_method("find_by_#{field}") do |value, options={}|
-        options = {:conditions => ["#{field} ILIKE '%#{value}%'"]}.merge(options)
+      define_method("find_by_#{field}") do |value, options|
+        options = {:conditions => ["#{field} ILIKE '%#{value}%'"]}.merge(options || {})
         find(options)
       end
     end
@@ -45,8 +45,8 @@ module OpenKVK
       end
 
       # format B.V. and N.V.
-      name.gsub!(/([b|n]\.?v\.?)$/i) do |match|
-        "#{match.to_s[0].upcase}.V."
+      name.gsub!(/([b|n]\.?v\.?)$/) do |match|
+        "#{match[0].to_s.upcase}.V."
       end
       name
     end
