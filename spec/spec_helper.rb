@@ -1,9 +1,12 @@
 require 'rspec'
-require 'simplecov'
-SimpleCov.start do
-  add_group 'OpenKVK', 'lib/openkvk'
-  add_group 'Specs', 'spec'
-  add_filter __FILE__
+
+if (RUBY_VERSION || VERSION)[0..2] == "1.9"
+  require 'simplecov'
+  SimpleCov.start do
+    add_group 'OpenKVK', 'lib/openkvk'
+    add_group 'Specs', 'spec'
+    add_filter __FILE__
+  end
 end
 
 RSpec.configure do |config|
