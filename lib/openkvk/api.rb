@@ -6,18 +6,20 @@ require 'hashie/mash'
 
 module OpenKVK
   class InvalidResponseException < Exception; end
-  
+
   class API
     class << self
       def search(keywords)
         begin
-          JSON.parse(get(keywords, "sphinx")).first["RESULT"]
+          raw_response = get(keywords, "officieel")
+          JSON.parse(raw_response).map {|result| Hashie::Mash.new(result)}
         rescue Exception => e
           raise_exception
         end
       end
-      
+
       def query(query)
+        query = query + ";"
         begin
           result = JSON.parse(get(query)).first["RESULT"]
           result["ROWS"].map { |row| Hashie::Mash.new(Hash[*result["HEADER"].zip(row).flatten]) }
@@ -25,9 +27,9 @@ module OpenKVK
           raise_exception
         end
       end
-      
-      private
-      
+
+     # private
+
       def get(query, service="api")
         response = Net::HTTP.get_response(URI.parse("http://#{service}.#{OpenKVK.host}/json/#{URI.escape(query)}"))
         if response.kind_of?(Net::HTTPRedirection)
