@@ -14,11 +14,12 @@ RSpec.configure do |config|
 end
 
 def expect_query(sql, response)
+  sql = sql+";"
   OpenKVK::API.expects(:get).with(sql).returns(response)
 end
 
 def expect_search(keywords, response)
-  OpenKVK::API.expects(:get).with(keywords, "sphinx").returns(response)
+  OpenKVK::API.expects(:get).with(keywords, "officieel").returns(response)
 end
 
 load File.expand_path('../../lib/openkvk.rb', __FILE__)
